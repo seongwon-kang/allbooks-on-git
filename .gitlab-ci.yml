@@ -26,6 +26,14 @@ image: maven:3.3.9-jdk-8
 cache:
   paths:
     - .m2/repository
+    - frontend/node_modules
+
+build-front:
+  image: node:12
+  stage: build
+  script:
+    - cd frontend; npm install; npm run build
+    - cd ../; cp -R frontend/build src/main/resources/static
 
 # For merge requests do not `deploy` but only run `verify`.
 # See https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
